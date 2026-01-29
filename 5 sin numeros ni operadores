@@ -1,0 +1,13 @@
+numeros = ["hola","que","haces","yo","nada"]
+
+def unusual_five(numeros):
+
+    resultado = len(numeros)
+
+    return resultado
+
+
+
+escribir = unusual_five(numeros)
+
+print(escribir)
