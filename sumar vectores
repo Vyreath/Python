@@ -1,0 +1,15 @@
+num = int(input("Dame el tamaño de los vectores: "))
+
+vector = []
+vector2 = []
+for i in range (num):
+    valor = int(input(f"Dame el valor de la posicion {i} del vector 1: "))
+    vector.append(valor)
+
+for i in range (num):
+    valor2 = int(input(f"Dame el valor de la posicion {i} del vector 2: "))
+    vector2.append(valor2)
+
+for i in range (num):
+    resultado = vector[i] + vector2[i]
+    print(resultado)
