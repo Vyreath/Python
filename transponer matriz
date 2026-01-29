@@ -1,0 +1,24 @@
+f = int(input("Dame el número de filas: "))
+c = int(input("Dame el número de columnas: "))
+
+matriz = [[0 for j in range(c)] for i in range(f)]
+
+print("\nEscribe la matriz:")
+for i in range(f):
+    for j in range(c):
+        matriz[i][j] = int(input(f"[{i}][{j}]: "))
+
+print("\nMatriz normal:")
+for i in range(f):
+    for j in range(c):
+        print(matriz[i][j], end=" ")
+    print()
+
+print("\nMatriz volteada (transpuesta):")
+for j in range(c):
+    for i in range(f):
+        print(matriz[i][j], end=" ")
+    print()
+
+
+
