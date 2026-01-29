@@ -1,0 +1,32 @@
+while True:
+    f1 = int(input("Escribe f1: "))
+    c1 = int(input("Escribe c1: "))
+    f2 = int(input("Escribe f2: "))
+    c2 = int(input("Escribe c2: "))
+
+    if c1 == f2:
+        break
+    print("Error: c1 debe ser igual a f2")
+
+matriz1 = [[0 for j in range(c1)] for i in range(f1)]
+matriz2 = [[0 for j in range(c2)] for i in range(f2)]
+matriz3 = [[0 for j in range(c2)] for i in range(f1)]
+
+for i in range(f1):
+    for j in range(c1):
+        matriz1[i][j] = int(input(f"Matriz 1 [{i}][{j}]: "))
+
+for i in range(f2):
+    for j in range(c2):
+        matriz2[i][j] = int(input(f"Matriz 2 [{i}][{j}]: "))
+
+for i in range(f1):
+    for j in range(c2):
+        for k in range(c1):
+            matriz3[i][j] += matriz1[i][k] * matriz2[k][j]
+
+print("\nResultado:")
+for i in range(f1):
+    for j in range(c2):
+        print(matriz3[i][j])
+    print()
