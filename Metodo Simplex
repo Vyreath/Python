@@ -1,0 +1,104 @@
+n = int(input("Numero de variables: "))
+tipo = input("Max o Min: ").lower()
+
+objetivo = []
+for i in range(n):
+    objetivo.append(float(input(f"Coeficiente x{i+1}: ")))
+
+if tipo == "min":
+    for i in range(n):
+        objetivo[i] = -objetivo[i]
+
+r = int(input("Numero de restricciones: "))
+
+restricciones = []
+resultados = []
+
+for i in range(r):
+    fila = []
+    for j in range(n):
+        fila.append(float(input(f"Restriccion {i+1}, coef x{j+1}: ")))
+    restricciones.append(fila)
+    resultados.append(float(input("Resultado: ")))
+
+columnas = n + r + 1
+filas = r + 1
+
+tabla = []
+for i in range(filas):
+    fila = []
+    for j in range(columnas):
+        fila.append(0)
+    tabla.append(fila)
+
+for i in range(r):
+    for j in range(n):
+        tabla[i][j] = restricciones[i][j]
+    tabla[i][n+i] = 1
+    tabla[i][-1] = resultados[i]
+
+for j in range(n):
+    tabla[-1][j] = -objetivo[j]
+
+for fila in tabla:
+    print(" ".join(f"{round(x,2):>8}" for x in fila))
+print()
+
+while True:
+    ultima = tabla[-1]
+    col_pivote = 0
+    for i in range(len(ultima)-1):
+        if ultima[i] < ultima[col_pivote]:
+            col_pivote = i
+
+    if ultima[col_pivote] >= 0:
+        break
+
+    ratios = []
+    for i in range(len(tabla)-1):
+        if tabla[i][col_pivote] > 0:
+            ratios.append(tabla[i][-1] / tabla[i][col_pivote])
+        else:
+            ratios.append(float('inf'))
+
+    fila_pivote = 0
+    for i in range(len(ratios)):
+        if ratios[i] < ratios[fila_pivote]:
+            fila_pivote = i
+
+    pivote = tabla[fila_pivote][col_pivote]
+
+    for j in range(len(tabla[0])):
+        tabla[fila_pivote][j] = tabla[fila_pivote][j] / pivote
+
+    for i in range(len(tabla)):
+        if i != fila_pivote:
+            factor = tabla[i][col_pivote]
+            for j in range(len(tabla[0])):
+                tabla[i][j] = tabla[i][j] - factor * tabla[fila_pivote][j]
+
+    for fila in tabla:
+        print(" ".join(f"{round(x,2):>8}" for x in fila))
+    print()
+
+print("Resultado final:")
+for fila in tabla:
+    print(" ".join(f"{round(x,2):>8}" for x in fila))
+
+solucion = []
+for j in range(n):
+    col = []
+    for i in range(filas):
+        col.append(tabla[i][j])
+
+    if col.count(1) == 1 and col.count(0) == filas-1:
+        fila = col.index(1)
+        solucion.append(tabla[fila][-1])
+    else:
+        solucion.append(0)
+
+print("Solucion:")
+for i in range(n):
+    print(f"x{i+1} =", round(solucion[i],2))
+
+print("Valor optimo =", round(tabla[-1][-1],2))
